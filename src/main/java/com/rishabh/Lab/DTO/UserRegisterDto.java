@@ -16,7 +16,6 @@ import java.util.Set;
 @Getter
 public class UserRegisterDto {
 
-
     private String username;
     private String email;
     private String passwordHash;
@@ -25,6 +24,5 @@ public class UserRegisterDto {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Set<Course> courseUser;
-
 
 }

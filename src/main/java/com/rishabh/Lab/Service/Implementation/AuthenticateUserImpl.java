@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,6 +43,11 @@ public class AuthenticateUserImpl implements AuthenticateUser {
         return "Login Success";
     }
 
+    @Override
+    public List<User> getUser() {
+
+        return userDetailRepository.findAll();
+    }
 
 
 }
