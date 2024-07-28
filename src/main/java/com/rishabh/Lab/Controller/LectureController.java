@@ -11,7 +11,7 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin("*")
 @RestController
 @AllArgsConstructor
 @Getter
@@ -23,6 +23,12 @@ public class LectureController {
     @PostMapping("/detail")
     public ResponseEntity<CourseDto> Register(@RequestBody CourseDto courseDto) throws Exception {
         CourseDto response = courseService.AddCourse(courseDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/getdetail")
+    public ResponseEntity<CourseDto> getCourses() throws Exception {
+        CourseDto response = courseService.getCourse();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

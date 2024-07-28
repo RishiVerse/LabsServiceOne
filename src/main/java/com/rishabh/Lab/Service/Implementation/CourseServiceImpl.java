@@ -13,6 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -40,5 +42,11 @@ public class CourseServiceImpl implements CourseService {
             courseRepository.save(course);
             return modelMapper.map(course, CourseDto.class);
         }
+    }
+
+    @Override
+    public CourseDto getCourse() {
+        List<Course> courses=courseRepository.findAll();
+        return modelMapper.map(courses, CourseDto.class);
     }
 }
