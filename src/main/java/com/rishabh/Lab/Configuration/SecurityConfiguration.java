@@ -36,8 +36,7 @@ public class SecurityConfiguration {
                     authorize.requestMatchers("/**").permitAll();
 
                     authorize.anyRequest().authenticated();
-                })
-                ;
+                });
         return http.build();
     }
 
