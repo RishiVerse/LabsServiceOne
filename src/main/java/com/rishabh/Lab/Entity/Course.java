@@ -20,7 +20,6 @@ import java.util.Set;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
     private Long courseId;
 
@@ -28,8 +27,9 @@ public class Course {
     private String courseName;
 
     @ManyToOne
-    @JoinColumn(name = "instructor_username", referencedColumnName = "username", nullable = false)
+    @JoinColumn(referencedColumnName = "username")
     private User instructorUsername;
+
 
     @Column(name = "description")
     private String description;

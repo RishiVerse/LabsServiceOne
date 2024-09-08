@@ -1,24 +1,20 @@
-version: '3.8'
-
 services:
   app:
-    image : rishabhm148/rishabhlabs1.0
+    image : 32aa1a493317
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/LearningRnD
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 123456789
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/masterDB
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1230
     depends_on:
       - database
 
   database:
-    image: mysql:latest
+    image: postgres:latest
     environment:
-      DATABASE_HOST: docker_mysql
-      DATABASE_PORT: 3306
-      MYSQL_ROOT_USER: root
-      MYSQL_ROOT_PASSWORD: 123456789
-      MYSQL_DATABASE: LearningRnD
-
-
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1230
+      POSTGRES_DB: masterDB
+    ports:
+      - "5433:5432"  # Map to a different port on the host

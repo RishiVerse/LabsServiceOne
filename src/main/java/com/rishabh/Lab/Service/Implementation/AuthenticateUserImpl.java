@@ -29,7 +29,7 @@ public class AuthenticateUserImpl implements AuthenticateUser {
     @Override
     public UserRegisterDto Register(UserRegisterDto userRegisterDto) {
 
-        User user= new User(userRegisterDto.getUsername(), userRegisterDto.getEmail(), passwordEncoder.encode(userRegisterDto.getPasswordHash()), userRegisterDto.getFirstname(), userRegisterDto.getLastname(), userRegisterDto.getCreatedAt(), userRegisterDto.getUpdatedAt(),new HashSet<>());
+        User user= new User(userRegisterDto.getUsername(), userRegisterDto.getEmail(), passwordEncoder.encode(userRegisterDto.getPasswordHash()), userRegisterDto.getFirstname(), userRegisterDto.getLastname(),new HashSet<>());
 System.out.println("hello world");
         userDetailRepository.save(user);
         return modelMapper.map(user, UserRegisterDto.class);

@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -36,11 +37,20 @@ public class CourseServiceImpl implements CourseService {
         else {
 
 
-            Course course = new Course(courseDto.getCourseId(), courseDto.getCourseName(),new User(), courseDto.getInstructorUsername().getUsername(),
-                    courseDto.getCreatedAt(), courseDto.getUpdatedAt(), new HashSet<>());
 
-            courseRepository.save(course);
-            return modelMapper.map(course, CourseDto.class);
+            CourseDto course = new CourseDto.CourseBuilder()
+                                 .setCourseId(courseDto.getCourseId())
+                                 .setInstructorUsername(courseDto.getInstructorUsername())
+                                 .setCourseName(courseDto.getCourseName())
+                                 .setDescription(courseDto.getDescription())
+                                 .setCreatedAt(courseDto.getCreatedAt())
+                                 .setLesson(courseDto.getLesson())
+                                 .setUpdatedAt(courseDto.getUpdatedAt())
+                                 .build();
+
+
+            courseRepository.save(modelMapper.map(course, Course.class));
+            return course;
         }
     }
 

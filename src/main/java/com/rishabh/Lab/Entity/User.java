@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -35,14 +35,14 @@ public class User {
     @Column(name="lastname")
     private String lastname;
 
-    @Column(name="created_at")
-    private Timestamp createdAt;
+//    @Column(name="created_at")
+//    private Timestamp createdAt;
+//
+//    @Column(name="updated_at")
+//    private Timestamp updatedAt;
 
-    @Column(name="updated_at")
-    private Timestamp updatedAt;
+     @OneToMany(mappedBy = "instructorUsername", cascade = CascadeType.ALL)
+     private Set<Course> courseInstructor;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="username" )
-    private Set<Course> courseInstructor;
 
 }
