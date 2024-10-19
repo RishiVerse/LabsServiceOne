@@ -2,15 +2,12 @@ package com.rishabh.Lab.Controller;
 
 
 import com.rishabh.Lab.DTO.CourseDto;
-import com.rishabh.Lab.DTO.UserRegisterDto;
-import com.rishabh.Lab.Repository.CourseRepository;
-import com.rishabh.Lab.Service.Implementation.UserService;
+import com.rishabh.Lab.DTO.UserDto;
+import com.rishabh.Lab.Service.Implementation.UserServiceImpl;
 import com.rishabh.Lab.Service.Interfaces.CourseService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @RestController
+@RequestMapping("/course")
 public class CourseController {
 
 
@@ -26,23 +24,45 @@ public class CourseController {
     CourseService courseService;
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userServiceImpl;
 
-    @PostMapping("/addCourse")
-    public CourseDto addCourse(@RequestBody CourseDto courseDto) throws Exception {
+//    @PostMapping
+//    public CourseDto addCourse(@RequestBody CourseDto courseDto) throws Exception {
+//
+//        CourseDto courseDto1 = courseService.AddCourse(courseDto);
+//
+//        return courseDto1;
+//    }
 
-        CourseDto courseDto1 = courseService.AddCourse(courseDto);
+//    @GetMapping
+//    public List<UserDto> getUser() throws Exception {
+//        return userServiceImpl.getUser();
+//    }
 
-
-        return courseDto1;
+    @GetMapping
+    public List<CourseDto> getAllCourses() {
+        return courseService.getAllCourses();
     }
 
-    @GetMapping("/getUser")
-    public List<UserRegisterDto> getUser() throws Exception {
-            return  userService.getUser();
+    @GetMapping("/{id}")
+    public CourseDto getCourseById(@PathVariable Integer id) {
+        return courseService.getCourse(id);
     }
 
+    @PostMapping
+    public CourseDto createCourse(@RequestBody CourseDto courseDto) throws Exception {
+        return courseService.addCourse(courseDto);
+    }
 
+    @PutMapping("/{id}")
+    public CourseDto updateCourse(@PathVariable Integer id, @RequestBody CourseDto courseDto) throws Exception {
+        return courseService.updateCourse(courseDto, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCourse(@PathVariable Integer id) {
+        courseService.deleteCourse(id);
+    }
 
 
 }

@@ -1,21 +1,16 @@
 package com.rishabh.Lab.Service.Implementation;
 
 import com.rishabh.Lab.DTO.CourseDto;
-import com.rishabh.Lab.DTO.UserRegisterDto;
 import com.rishabh.Lab.Entity.Course;
-import com.rishabh.Lab.Entity.User;
-import com.rishabh.Lab.Repository.CourseRepository;
-import com.rishabh.Lab.Repository.UserDetailRepository;
-import com.rishabh.Lab.Service.Interfaces.AuthenticateUser;
+import com.rishabh.Lab.Repository.CourseRepo;
+import com.rishabh.Lab.Repository.UserRepo;
 import com.rishabh.Lab.Service.Interfaces.CourseService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -23,40 +18,41 @@ import java.util.Optional;
 public class CourseServiceImpl implements CourseService {
 
     ModelMapper modelMapper;
-    CourseRepository courseRepository;
-    UserDetailRepository user;
+    CourseRepo courseRepo;
+    UserRepo user;
+
     @Override
-    public CourseDto AddCourse(CourseDto courseDto) throws Exception {
-
-        String username=courseDto.getInstructorUsername().getUsername();
-
-        if(user.findByUsername(username).isEmpty())
-        {
-            throw new Exception("Username Does not Exist , Please Register yourself first than try again");
-        }
-        else {
+    public CourseDto addCourse(CourseDto courseDto) throws Exception {
+        Course course = modelMapper.map(courseDto, Course.class);
+        courseRepo.save(course);
+        return modelMapper.map(course, CourseDto.class);
+    }
 
 
+    @Override
+    public CourseDto updateCourse(CourseDto courseDto, Integer courseId) throws Exception {
+        Course course = courseRepo.findById(courseId)
+                .orElseThrow(() -> new Exception("Course not found"));
 
-            CourseDto course = new CourseDto.CourseBuilder()
-                                 .setCourseId(courseDto.getCourseId())
-                                 .setInstructorUsername(courseDto.getInstructorUsername())
-                                 .setCourseName(courseDto.getCourseName())
-                                 .setDescription(courseDto.getDescription())
-                                 .setCreatedAt(courseDto.getCreatedAt())
-                                 .setLesson(courseDto.getLesson())
-                                 .setUpdatedAt(courseDto.getUpdatedAt())
-                                 .build();
-
-
-            courseRepository.save(modelMapper.map(course, Course.class));
-            return course;
-        }
+        course = modelMapper.map(courseDto, Course.class);
+        course.setCourseId(courseId);
+        courseRepo.save(course);
+        return modelMapper.map(course, CourseDto.class);
     }
 
     @Override
-    public CourseDto getCourse() {
-        List<Course> courses=courseRepository.findAll();
-        return modelMapper.map(courses, CourseDto.class);
+    public void deleteCourse(Integer courseId) {
+        courseRepo.deleteById(courseId);
     }
+
+    @Override
+    public CourseDto getCourse(Integer courseId) {
+        return modelMapper.map(courseRepo.findById(courseId).get(), CourseDto.class);
+    }
+
+    @Override
+    public List<CourseDto> getAllCourses() {
+        return courseRepo.findAll().stream().map(course->modelMapper.map(course, CourseDto.class)).collect(Collectors.toList());
+    }
+
 }

@@ -5,10 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.Date;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -21,24 +17,18 @@ public class Course {
 
     @Id
     @Column(name = "course_id")
-    private Long courseId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer courseId;
 
     @Column(name = "course_name", nullable = false)
     private String courseName;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "username")
-    private User instructorUsername;
-
-
     @Column(name = "description")
     private String description;
 
-    @Column(name = "created_at")
-    private Timestamp createdAt = Timestamp.from(Instant.now());
-
-    @Column(name = "updated_at")
-    private Timestamp updatedAt = Timestamp.from(Instant.now());
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "username")
+    private User instructorUsername;
 
     @OneToMany
     @JoinColumn(name = "course")

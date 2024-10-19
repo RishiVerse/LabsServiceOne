@@ -19,7 +19,7 @@ public class Lesson {
 
     @Id
     @Column(name = "lesson_id")
-    private Long lessonId;
+    private Integer lessonId;
 
     @Column(name = "lesson_title", nullable = false)
     private String lessonTitle;

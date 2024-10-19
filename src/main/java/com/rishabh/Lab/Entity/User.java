@@ -18,8 +18,10 @@ import java.util.Set;
 @AllArgsConstructor
 public class User {
 
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @Column(name="username")
     private String username;
 
@@ -35,14 +37,6 @@ public class User {
     @Column(name="lastname")
     private String lastname;
 
-//    @Column(name="created_at")
-//    private Timestamp createdAt;
-//
-//    @Column(name="updated_at")
-//    private Timestamp updatedAt;
-
-     @OneToMany(mappedBy = "instructorUsername", cascade = CascadeType.ALL)
-     private Set<Course> courseInstructor;
-
-
+    @OneToMany(mappedBy = "instructorUsername", cascade = CascadeType.ALL)
+    private Set<Course> courseInstructor;
 }
