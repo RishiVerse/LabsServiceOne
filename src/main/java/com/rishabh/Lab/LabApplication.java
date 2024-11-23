@@ -9,13 +9,13 @@ import org.springframework.context.annotation.Bean;
 public class LabApplication {
 
 
-	@Bean
-	public ModelMapper modelMapper()
-	{
-		return new ModelMapper();
-	}
-	public static void main(String[] args) {
-		SpringApplication.run(LabApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(LabApplication.class, args);
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
 }
