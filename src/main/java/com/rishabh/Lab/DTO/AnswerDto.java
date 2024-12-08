@@ -19,4 +19,7 @@ public class AnswerDto {
     private Integer answerId;
 
     private Integer questionId;
+
+    StringBuffer str = new StringBuffer();
+
 }
