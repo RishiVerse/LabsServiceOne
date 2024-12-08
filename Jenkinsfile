@@ -26,7 +26,7 @@ pipeline {
                    sh 'docker login -u rishabhm148 -p ${dockerpwd}'
 
 }
-                   sh 'docker push rishabhm148/labs-app:v4'
+                   sh 'docker push rishabhm148/labs-app:v7'
                 }
             }
         }
